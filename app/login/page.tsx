@@ -5,7 +5,8 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { useRouter } from 'next/navigation';
 
 // Define the form schema using zod
 // const formSchema = z.object({
@@ -100,6 +101,10 @@ export default function SignInSignUp() {
       setType(text);
     }
   };
+  const router = useRouter();
+  const homeClickHandler= ()=>{
+    router.push('/');
+  };
 
   const togglePasswordVisibility = () => {
     setIsVisible(!isVisible);
@@ -110,6 +115,9 @@ export default function SignInSignUp() {
   return (
     <div className="App">
       <style>{`
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+        
       
   
   .text-darkturquoise {
@@ -350,16 +358,57 @@ export default function SignInSignUp() {
           transform: translateX(20%);
         }
 
+        /* Styling for social icons */
+        .social-container {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+        }
+
+        .social-container .social {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 50px;
+          width: 50px;
+          border-radius: 50%;
+          background-color: darkturquoise;
+          margin: 0 10px;
+          font-size: 20px;
+          color: white;
+          transition: transform 0.3s ease;
+        }
+
+        .social-container .social:hover {
+          transform: scale(1.1);
+        }
+
       `}</style>
       <div className={containerClass} id="container">
         <div className="form-container sign-up-container">
+          <div className='relative'>
+            <button className='eye-button' onClick={homeClickHandler}>
+              <FontAwesomeIcon icon={faHouse} className='h-5 w-5'></FontAwesomeIcon>
+            </button>
+          </div>
           <form onSubmit={signUpForm.handleSubmit(handleSignUpSubmit)}>
             <h1>Create Account</h1>
             <div className="social-container">
-              <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
-              <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
-              <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
-            </div>
+  <a href="https://www.facebook.com" className="social">
+    <i className="fab fa-facebook-f"></i>
+  </a>
+  <a href="https://www.google.com" className="social">
+    <i className="fab fa-google-plus-g"></i>
+  </a>
+  <a href="https://www.linkedin.com" className="social">
+    <i className="fab fa-linkedin-in"></i>
+  </a>
+  <a href="https://www.twitter.com" className="social">
+    <i className="fab fa-twitter"></i>
+  </a>
+</div>
+
+            <br></br>
             <span>or use your email for registration</span>
             <input type="text" placeholder="Name" {...signUpForm.register("name")} />
             {signUpForm.formState.errors.name && (
@@ -382,13 +431,28 @@ export default function SignInSignUp() {
           </form>
         </div>
         <div className="form-container sign-in-container">
+          <div className='relative'>
+            <button className='eye-button' onClick={homeClickHandler}>
+              <FontAwesomeIcon icon={faHouse} className='h-5 w-5'></FontAwesomeIcon>
+            </button>
+          </div>
           <form onSubmit={signInForm.handleSubmit(handleSignInSubmit)} >
             <h1>Access your Account</h1>
             <div className="social-container">
-              <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
-              <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
-              <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
-            </div>
+            <a href="https://www.facebook.com" className="social">
+    <i className="fab fa-facebook-f"></i>
+  </a>
+  <a href="https://www.google.com" className="social">
+    <i className="fab fa-google-plus-g"></i>
+  </a>
+  <a href="https://www.linkedin.com" className="social">
+    <i className="fab fa-linkedin-in"></i>
+  </a>
+  <a href="https://www.twitter.com" className="social">
+    <i className="fab fa-twitter"></i>
+  </a>
+</div>
+            <br></br>
             <span>or Proceed with Your Profile</span>
             <input type="email" placeholder="Email" {...signInForm.register("email")} />
             {signInForm.formState.errors.email && (
@@ -403,7 +467,10 @@ export default function SignInSignUp() {
             {signInForm.formState.errors.password && (
               <p className="text-darkturquoise">{signInForm.formState.errors.password?.message}</p>
             )}
-            <a href="#">Forgot your password?</a>
+            <span>
+  <a href="https://scrap-quest.vercel.app/">Forgot your password?</a>
+</span>
+            <br></br>
             <button type="submit">Sign In</button>
           </form>
         </div>
